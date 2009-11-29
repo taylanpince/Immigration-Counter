@@ -8,6 +8,7 @@
 
 #import "ImmigrationCounterAppDelegate.h"
 #import "FlipsideViewController.h"
+#import "AddEditEventViewController.h"
 #import "Event.h"
 
 
@@ -21,9 +22,11 @@
 	[self setTitle:@"Settings"];
 	[[self navigationController] setNavigationBarHidden:NO];
 	
-	UIBarButtonItem *doneBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(done)];
-	[[self navigationItem] setLeftBarButtonItem:doneBarButtonItem];
-	[doneBarButtonItem release];
+	[[self navigationItem] setLeftBarButtonItem:[self editButtonItem]];
+	
+	UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
+	[[self navigationItem] setRightBarButtonItem:saveBarButtonItem];
+	[saveBarButtonItem release];
 	
 	[self setManagedObjectContext:[(ImmigrationCounterAppDelegate *)[[UIApplication sharedApplication] delegate] managedObjectContext]];
 	
@@ -50,7 +53,7 @@
 	[request release];
 }
 
-- (void)done {
+- (void)save {
 	[[self delegate] flipsideViewControllerDidFinish:self];
 }
 
@@ -68,7 +71,7 @@
 	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
 	
 	if (cell == nil) {
-		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+		cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier] autorelease];
 		[cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
 	}
 	
@@ -88,6 +91,66 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
 	return (section == 0) ? @"Start Date" : @"Vacations";
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.section == 0) {
+		/*DataSetViewController *controller = [[DataSetViewController alloc] initWithStyle:UITableViewStyleGrouped];
+		
+		controller.dataSet = dataSet;
+		
+		[self.navigationController pushViewController:controller animated:YES];
+		
+		[controller release];*/
+	} else {
+		/*DataPanel *dataPanel;
+		
+		if (indexPath.row == [eventsArray count]) {
+			dataPanel = [[[DataPanel alloc] init] autorelease];
+		} else {
+			dataPanel = [[(MagpieAppDelegate *)[[UIApplication sharedApplication] delegate] dataPanels] objectAtIndex:indexPath.row];
+		}*/
+		
+		AddEditEventViewController *controller = [[AddEditEventViewController alloc] initWithStyle:UITableViewStyleGrouped];
+		
+		//controller.dataPanel = dataPanel;
+		
+		[self.navigationController pushViewController:controller animated:YES];
+		
+		[controller release];
+	}
+}
+
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath {
+	if (indexPath.section == 0) {
+		return UITableViewCellEditingStyleInsert;
+	} else {
+		if (indexPath.row == [eventsArray count]) {
+			return UITableViewCellEditingStyleInsert;
+		} else {
+			return UITableViewCellEditingStyleDelete;
+		}
+	}
+}
+
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+		NSManagedObject *event = [eventsArray objectAtIndex:indexPath.row];
+		
+		[managedObjectContext deleteObject:event];
+		[eventsArray removeObjectAtIndex:indexPath.row];
+		[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:YES];
+		
+		NSError *error;
+		
+		if (![managedObjectContext save:&error]) {
+			// TODO: Handle the error
+		}
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+		[self tableView:tableView didSelectRowAtIndexPath:indexPath];
+	}
 }
 
 - (void)didReceiveMemoryWarning {

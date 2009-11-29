@@ -20,7 +20,7 @@
 
 @property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
 
-- (void)done;
+- (void)save;
 
 @end
 

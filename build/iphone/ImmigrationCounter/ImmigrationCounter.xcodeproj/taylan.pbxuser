@@ -9,9 +9,9 @@
 	};
 	1D3623250D0F684500981E51 /* ImmigrationCounterAppDelegate.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1086, 1887}}";
-			sepNavSelRange = "{1160, 0}";
-			sepNavVisRange = "{287, 1285}";
+			sepNavIntBoundsRect = "{{0, 0}, {1188, 1802}}";
+			sepNavSelRange = "{1981, 0}";
+			sepNavVisRange = "{1697, 1295}";
 		};
 	};
 	1D6058900D05DD3D006BFB54 /* ImmigrationCounter */ = {
@@ -19,6 +19,13 @@
 		executables = (
 			ECCB9C6C10C2CB2E00D624BE /* ImmigrationCounter */,
 		);
+	};
+	289233A40DB2D0840083E9F9 /* MainView.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 745}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 209}";
+		};
 	};
 	289233A80DB2D0DB0083E9F9 /* MainViewController.h */ = {
 		uiCtxt = {
@@ -29,23 +36,23 @@
 	};
 	289233A90DB2D0DB0083E9F9 /* MainViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1086, 1088}}";
-			sepNavSelRange = "{244, 0}";
-			sepNavVisRange = "{327, 1379}";
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 1241}}";
+			sepNavSelRange = "{1170, 0}";
+			sepNavVisRange = "{584, 1327}";
 		};
 	};
 	289233AC0DB2D0DB0083E9F9 /* FlipsideViewController.h */ = {
 		uiCtxt = {
 			sepNavIntBoundsRect = "{{0, 0}, {1086, 745}}";
-			sepNavSelRange = "{620, 0}";
-			sepNavVisRange = "{0, 753}";
+			sepNavSelRange = "{615, 0}";
+			sepNavVisRange = "{0, 749}";
 		};
 	};
 	289233AD0DB2D0DB0083E9F9 /* FlipsideViewController.m */ = {
 		uiCtxt = {
-			sepNavIntBoundsRect = "{{0, 0}, {1100, 748}}";
-			sepNavSelRange = "{802, 0}";
-			sepNavVisRange = "{0, 927}";
+			sepNavIntBoundsRect = "{{0, 0}, {1260, 2805}}";
+			sepNavSelRange = "{2791, 150}";
+			sepNavVisRange = "{2540, 1336}";
 		};
 	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
@@ -65,6 +72,13 @@
 		};
 		sourceControlManager = ECCB9C7F10C2CB4E00D624BE /* Source Control */;
 		userBuildSettings = {
+		};
+	};
+	29B97316FDCFA39411CA2CEA /* main.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 745}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 369}";
 		};
 	};
 	32CA4F630368D1EE00C91783 /* ImmigrationCounter_Prefix.pch */ = {
@@ -272,6 +286,34 @@
 				"xdesign model browser state key - shown/hidden" = 1;
 				"xdesign model diagram view visible rect key" = "{{-241, -44}, {1130, 520}}";
 			};
+		};
+	};
+	ECCB9C9F10C2D47700D624BE /* Event.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 745}}";
+			sepNavSelRange = "{285, 0}";
+			sepNavVisRange = "{0, 285}";
+		};
+	};
+	ECCB9CA010C2D47700D624BE /* Event.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 745}}";
+			sepNavSelRange = "{229, 0}";
+			sepNavVisRange = "{0, 229}";
+		};
+	};
+	ECCB9CC010C3147300D624BE /* AddEditEventViewController.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1086, 745}}";
+			sepNavSelRange = "{234, 0}";
+			sepNavVisRange = "{0, 251}";
+		};
+	};
+	ECCB9CC110C3147300D624BE /* AddEditEventViewController.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1260, 1088}}";
+			sepNavSelRange = "{1043, 0}";
+			sepNavVisRange = "{549, 975}";
 		};
 	};
 }
