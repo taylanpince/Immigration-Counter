@@ -14,4 +14,7 @@
 @property (nonatomic, retain) NSDate *endDate;
 @property (nonatomic, retain) NSDate *startDate;
 
+- (NSInteger)differenceBetweenDatesInDays;
+- (BOOL)datesAreValid;
+
 @end

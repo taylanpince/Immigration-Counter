@@ -22,7 +22,7 @@
 }
 
 - (BOOL)datesAreValid {
-	NSComparisonResult *comparison = [[self startDate] compare:[self endDate]];
+	NSComparisonResult comparison = [[self startDate] compare:[self endDate]];
 	
 	return (comparison == NSOrderedSame | comparison == NSOrderedAscending);
 }
