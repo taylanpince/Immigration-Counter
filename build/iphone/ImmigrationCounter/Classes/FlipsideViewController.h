@@ -6,17 +6,22 @@
 //  Copyright Hippo Foundry 2009. All rights reserved.
 //
 
+#import "AddEditEventViewController.h"
+
+
 @protocol FlipsideViewControllerDelegate;
 
-@interface FlipsideViewController : UITableViewController {
+@interface FlipsideViewController : UITableViewController <AddEditEventViewControllerDelegate> {
 	NSMutableArray *eventsArray;
 	NSManagedObjectContext *managedObjectContext;
+	NSDateFormatter *dateFormatter;
 	
 	id <FlipsideViewControllerDelegate> delegate;
 }
 
 @property (nonatomic, retain) NSMutableArray *eventsArray;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
+@property (nonatomic ,retain) NSDateFormatter *dateFormatter;
 
 @property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
 

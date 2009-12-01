@@ -14,7 +14,7 @@
 
 @implementation FlipsideViewController
 
-@synthesize delegate, eventsArray, managedObjectContext;
+@synthesize delegate, eventsArray, managedObjectContext, dateFormatter;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,6 +51,9 @@
 	[self setEventsArray:results];
 	[results release];
 	[request release];
+	
+	[self setDateFormatter:[[NSDateFormatter alloc] init]];
+	[[self dateFormatter] setDateStyle:NSDateFormatterMediumStyle];
 }
 
 - (void)save {
@@ -81,7 +84,9 @@
 		if (indexPath.row == [eventsArray count]) {
 			[[cell textLabel] setText:@"Add a new vacation"];
 		} else {
-			[[cell textLabel] setText:@"01/02/2009 - 10/02/2009"];
+			Event *event = (Event *)[eventsArray objectAtIndex:indexPath.row];
+			
+			[[cell textLabel] setText:[NSString stringWithFormat:@"%@ → %@", [dateFormatter stringFromDate:[event startDate]], [dateFormatter stringFromDate:[event endDate]]]];
 			[[cell detailTextLabel] setText:@"9 days"];
 		}
 	}
@@ -95,28 +100,24 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.section == 0) {
-		/*DataSetViewController *controller = [[DataSetViewController alloc] initWithStyle:UITableViewStyleGrouped];
-		
-		controller.dataSet = dataSet;
-		
-		[self.navigationController pushViewController:controller animated:YES];
-		
-		[controller release];*/
+		// TODO: Move to edit start date view
 	} else {
-		/*DataPanel *dataPanel;
-		
-		if (indexPath.row == [eventsArray count]) {
-			dataPanel = [[[DataPanel alloc] init] autorelease];
-		} else {
-			dataPanel = [[(MagpieAppDelegate *)[[UIApplication sharedApplication] delegate] dataPanels] objectAtIndex:indexPath.row];
-		}*/
-		
 		AddEditEventViewController *controller = [[AddEditEventViewController alloc] initWithStyle:UITableViewStyleGrouped];
+		Event *event;
+		BOOL insert;
 		
-		//controller.dataPanel = dataPanel;
+		if (indexPath.row < [eventsArray count]) {
+			event = [eventsArray objectAtIndex:indexPath.row];
+			insert = NO;
+		} else {
+			event = [NSEntityDescription insertNewObjectForEntityForName:@"Event" inManagedObjectContext:managedObjectContext];
+			insert = YES;
+		}
 		
+		[controller setEvent:event];
+		[controller setInsert:insert];
+		[controller setDelegate:self];
 		[self.navigationController pushViewController:controller animated:YES];
-		
 		[controller release];
 	}
 }
@@ -153,6 +154,23 @@
 	}
 }
 
+- (void)addEditEventViewController:(AddEditEventViewController *)controller didFinishWithSave:(BOOL)save withInsert:(BOOL)insert {
+	if (save) {
+		NSError *error;
+		
+		if (![managedObjectContext save:&error]) {
+			// TODO: Handle the error
+		} else if (insert) {
+			[[self eventsArray] addObject:[controller event]];
+		}
+	} else {
+		[managedObjectContext deleteObject:[controller event]];
+	}
+	
+	[[self navigationController] popViewControllerAnimated:YES];
+	[[self tableView] reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -164,6 +182,7 @@
 - (void)dealloc {
 	[eventsArray release];
 	[managedObjectContext release];
+	[dateFormatter release];
     [super dealloc];
 }
 

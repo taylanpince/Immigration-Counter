@@ -7,19 +7,30 @@
 //
 
 #import "AddEditEventViewController.h"
+#import "Event.h"
 
 
 @implementation AddEditEventViewController
 
-@synthesize datePicker;
+@synthesize datePicker, activeSection, dateFormatter, event, delegate, insert;
 
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	[self setTitle:@"Add Vacation"];
+	if (self.insert) {
+		[self setTitle:@"Add Vacation"];
+	} else {
+		[self setTitle:@"Edit Vacation"];
+	}
+	
 	[self.tableView setScrollEnabled:NO];
 	
+	UIBarButtonItem *cancelBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancel)];
+	[[self navigationItem] setLeftBarButtonItem:cancelBarButtonItem];
+	[cancelBarButtonItem release];
+	
 	UIBarButtonItem *saveBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemSave target:self action:@selector(save)];
+	[saveBarButtonItem setEnabled:NO];
 	[[self navigationItem] setRightBarButtonItem:saveBarButtonItem];
 	[saveBarButtonItem release];
 	
@@ -29,6 +40,10 @@
 	[datePicker addTarget:self action:@selector(didSelectDate:) forControlEvents:UIControlEventValueChanged];
 	
 	[self.view addSubview:datePicker];
+	[self setActiveSection:0];
+	
+	[self setDateFormatter:[[NSDateFormatter alloc] init]];
+	[[self dateFormatter] setDateStyle:NSDateFormatterLongStyle];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,11 +55,22 @@
 }
 
 - (void)save {
-	
+	[[self delegate] addEditEventViewController:self didFinishWithSave:YES withInsert:self.insert];
+}
+
+- (void)cancel {
+	[[self delegate] addEditEventViewController:self didFinishWithSave:NO withInsert:self.insert];
 }
 
 - (void)didSelectDate:(id)sender {
-	[self.tableView reloadData];
+	if (activeSection == 0) {
+		[event setStartDate:[datePicker date]];
+	} else {
+		[event setEndDate:[datePicker date]];
+	}
+	
+	[[[self navigationItem] rightBarButtonItem] setEnabled:([event startDate] && [event endDate])];
+	[[self tableView] reloadData];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -66,14 +92,29 @@
 	
     if (cell == nil) {
         cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
-		
-		[cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
+	
+	if (indexPath.section == 0) {
+		[[cell textLabel] setText:[dateFormatter stringFromDate:[event startDate]]];
+	} else {
+		[[cell textLabel] setText:[dateFormatter stringFromDate:[event endDate]]];
+	}
+	
+	if (indexPath.section == activeSection) {
+		[tableView selectRowAtIndexPath:indexPath animated:NO scrollPosition:UITableViewScrollPositionNone];
+	}
 	
     return cell;
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+	[self setActiveSection:indexPath.section];
+}
+
 - (void)dealloc {
+	[datePicker release];
+	[dateFormatter release];
+	[event release];
     [super dealloc];
 }
 
