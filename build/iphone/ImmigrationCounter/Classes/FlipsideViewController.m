@@ -9,12 +9,13 @@
 #import "ImmigrationCounterAppDelegate.h"
 #import "FlipsideViewController.h"
 #import "AddEditEventViewController.h"
+#import "AddEditDateViewController.h"
 #import "Event.h"
 
 
 @implementation FlipsideViewController
 
-@synthesize delegate, eventsArray, managedObjectContext, dateFormatter;
+@synthesize delegate, eventsArray, managedObjectContext, dateFormatter, immigrationDate;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -52,6 +53,13 @@
 	[results release];
 	[request release];
 	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSDate *savedDate = (NSDate *)[defaults objectForKey:@"immigrationDate"];
+	
+	if (savedDate) {
+		[self setImmigrationDate:savedDate];
+	}
+	
 	[self setDateFormatter:[[NSDateFormatter alloc] init]];
 	[[self dateFormatter] setDateStyle:NSDateFormatterMediumStyle];
 }
@@ -79,7 +87,11 @@
 	}
 	
 	if (indexPath.section == 0) {
-		[[cell textLabel] setText:@"18/08/2008"];
+		if (immigrationDate) {
+			[[cell textLabel] setText:[dateFormatter stringFromDate:immigrationDate]];
+		} else {
+			[[cell textLabel] setText:@"N/A"];
+		}
 	} else {
 		if (indexPath.row == [eventsArray count]) {
 			[[cell textLabel] setText:@"Add a new vacation"];
@@ -87,7 +99,7 @@
 			Event *event = (Event *)[eventsArray objectAtIndex:indexPath.row];
 			
 			[[cell textLabel] setText:[NSString stringWithFormat:@"%@ → %@", [dateFormatter stringFromDate:[event startDate]], [dateFormatter stringFromDate:[event endDate]]]];
-			[[cell detailTextLabel] setText:@"9 days"];
+			[[cell detailTextLabel] setText:[NSString stringWithFormat:@"%d days", [event differenceBetweenDatesInDays]]];
 		}
 	}
 	
@@ -100,7 +112,15 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	if (indexPath.section == 0) {
-		// TODO: Move to edit start date view
+		AddEditDateViewController *controller = [[AddEditDateViewController alloc] initWithStyle:UITableViewStyleGrouped];
+		
+		if ([self immigrationDate]) {
+			[controller setImmigrationDate:[self immigrationDate]];
+		}
+		
+		[controller setDelegate:self];
+		[self.navigationController pushViewController:controller animated:YES];
+		[controller release];
 	} else {
 		AddEditEventViewController *controller = [[AddEditEventViewController alloc] initWithStyle:UITableViewStyleGrouped];
 		Event *event;
@@ -171,6 +191,18 @@
 	[[self tableView] reloadData];
 }
 
+- (void)addEditDateViewController:(AddEditDateViewController *)controller didFinishWithSave:(BOOL)save {
+	if (save) {
+		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+		
+		[self setImmigrationDate:[controller immigrationDate]];
+		[defaults setObject:immigrationDate forKey:@"immigrationDate"];
+	}
+	
+	[[self navigationController] popViewControllerAnimated:YES];
+	[[self tableView] reloadData];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
@@ -183,6 +215,7 @@
 	[eventsArray release];
 	[managedObjectContext release];
 	[dateFormatter release];
+	[immigrationDate release];
     [super dealloc];
 }
 

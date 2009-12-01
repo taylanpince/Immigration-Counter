@@ -17,6 +17,7 @@
 		289233A70DB2D0840083E9F9 /* MainView.m in Sources */ = {isa = PBXBuildFile; fileRef = 289233A50DB2D0840083E9F9 /* MainView.m */; };
 		289233AE0DB2D0DB0083E9F9 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289233A90DB2D0DB0083E9F9 /* MainViewController.m */; };
 		289233B00DB2D0DB0083E9F9 /* FlipsideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 289233AD0DB2D0DB0083E9F9 /* FlipsideViewController.m */; };
+		ECB8DF6310C4D78400740FF4 /* AddEditDateViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ECB8DF6210C4D78400740FF4 /* AddEditDateViewController.m */; };
 		ECCB9C8B10C2CD9700D624BE /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECCB9C8A10C2CD9700D624BE /* CoreData.framework */; };
 		ECCB9C9B10C2D3B700D624BE /* ImmigrationCounter.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = ECCB9C9A10C2D3B700D624BE /* ImmigrationCounter.xcdatamodel */; };
 		ECCB9CA110C2D47700D624BE /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = ECCB9CA010C2D47700D624BE /* Event.m */; };
@@ -41,6 +42,8 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* ImmigrationCounter_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImmigrationCounter_Prefix.pch; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* ImmigrationCounter-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ImmigrationCounter-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		ECB8DF6110C4D78400740FF4 /* AddEditDateViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddEditDateViewController.h; sourceTree = "<group>"; };
+		ECB8DF6210C4D78400740FF4 /* AddEditDateViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddEditDateViewController.m; sourceTree = "<group>"; };
 		ECCB9C8A10C2CD9700D624BE /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		ECCB9C9A10C2D3B700D624BE /* ImmigrationCounter.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = ImmigrationCounter.xcdatamodel; sourceTree = "<group>"; };
 		ECCB9C9F10C2D47700D624BE /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
@@ -89,6 +92,8 @@
 				289233AD0DB2D0DB0083E9F9 /* FlipsideViewController.m */,
 				ECCB9CC010C3147300D624BE /* AddEditEventViewController.h */,
 				ECCB9CC110C3147300D624BE /* AddEditEventViewController.m */,
+				ECB8DF6110C4D78400740FF4 /* AddEditDateViewController.h */,
+				ECB8DF6210C4D78400740FF4 /* AddEditDateViewController.m */,
 			);
 			name = "Flipside View";
 			sourceTree = "<group>";
@@ -228,6 +233,7 @@
 				ECCB9C9B10C2D3B700D624BE /* ImmigrationCounter.xcdatamodel in Sources */,
 				ECCB9CA110C2D47700D624BE /* Event.m in Sources */,
 				ECCB9CC210C3147300D624BE /* AddEditEventViewController.m in Sources */,
+				ECB8DF6310C4D78400740FF4 /* AddEditDateViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

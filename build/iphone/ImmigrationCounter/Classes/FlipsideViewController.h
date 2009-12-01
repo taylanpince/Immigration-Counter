@@ -7,21 +7,24 @@
 //
 
 #import "AddEditEventViewController.h"
+#import "AddEditDateViewController.h"
 
 
 @protocol FlipsideViewControllerDelegate;
 
-@interface FlipsideViewController : UITableViewController <AddEditEventViewControllerDelegate> {
+@interface FlipsideViewController : UITableViewController <AddEditEventViewControllerDelegate, AddEditDateViewControllerDelegate> {
 	NSMutableArray *eventsArray;
 	NSManagedObjectContext *managedObjectContext;
 	NSDateFormatter *dateFormatter;
+	NSDate *immigrationDate;
 	
 	id <FlipsideViewControllerDelegate> delegate;
 }
 
 @property (nonatomic, retain) NSMutableArray *eventsArray;
 @property (nonatomic, retain) NSManagedObjectContext *managedObjectContext;
-@property (nonatomic ,retain) NSDateFormatter *dateFormatter;
+@property (nonatomic, retain) NSDateFormatter *dateFormatter;
+@property (nonatomic, retain) NSDate *immigrationDate;
 
 @property (nonatomic, assign) id <FlipsideViewControllerDelegate> delegate;
 
